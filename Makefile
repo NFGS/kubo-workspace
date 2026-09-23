@@ -3,7 +3,7 @@ COMPOSE := docker compose -f kubo-infra/docker-compose.yml
 
 .DEFAULT_GOAL := help
 
-.PHONY: help up down build ps logs seed smoke demo restart clean foreign-stop foreign-start pdf push
+.PHONY: help up down build ps logs seed smoke demo restart clean foreign-stop foreign-start pdf push reset-demo
 
 help: ## Muestra esta ayuda
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2}'
@@ -26,6 +26,9 @@ logs: ## Logs en vivo
 
 seed: ## Carga datos de demostracion
 	./kubo-infra/scripts/seed.sh
+
+reset-demo: ## Limpia los datos de prueba y recarga la semilla (borra datos)
+	./kubo-infra/scripts/reset-demo.sh
 
 smoke: ## Prueba el flujo completo end-to-end
 	./kubo-infra/scripts/smoke.sh
