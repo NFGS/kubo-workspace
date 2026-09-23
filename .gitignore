@@ -1,0 +1,12 @@
+# Repositorios hijos (cada uno tiene su propio .git)
+kubo-*/
+
+# Entorno
+.env
+.env.local
+*.env.local
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.log
