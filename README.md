@@ -12,6 +12,8 @@ y opera sin conexión a internet.
 | Versión | `0.1.0-mvp` |
 | Fecha | 2026-09-23 |
 | Alcance | MVP demostrable (ver `kubo-docs/09-demo-guion.md`) |
+| Verificación | `make smoke` — 37 comprobaciones end-to-end en verde |
+| Auditoría | `kubo-docs/10-auditoria.md` — 10 hallazgos corregidos y plan de mejora |
 | Licencia | MIT |
 
 ## Repositorios
@@ -42,5 +44,7 @@ Luego abrir <http://localhost:3000> y entrar con `admin@kubo.local` / `Admin123!
 - Arquitectura: [`kubo-docs/01-arquitectura.md`](./kubo-docs/01-arquitectura.md)
 - Seguridad: [`kubo-docs/04-seguridad.md`](./kubo-docs/04-seguridad.md)
 - Modelo de datos: [`kubo-docs/02-modelo-datos.md`](./kubo-docs/02-modelo-datos.md)
+- **Auditoría técnica y plan de mejora**: [`kubo-docs/10-auditoria.md`](./kubo-docs/10-auditoria.md)
 - Guion de demostración: [`kubo-docs/09-demo-guion.md`](./kubo-docs/09-demo-guion.md)
 - Índice completo: [`kubo-docs/README.md`](./kubo-docs/README.md)
+- PDF consolidado: `Kubo-Documentacion.pdf` (generar con `make pdf`)
