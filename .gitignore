@@ -10,3 +10,6 @@ kubo-*/
 .DS_Store
 Thumbs.db
 *.log
+
+# Volcados de Erlang (nunca son entregables)
+erl_crash.dump
