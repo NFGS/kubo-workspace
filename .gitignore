@@ -13,3 +13,7 @@ Thumbs.db
 
 # Volcados de Erlang (nunca son entregables)
 erl_crash.dump
+
+# Artefactos de pruebas de Python en la raiz
+.pytest_cache/
+__pycache__/
