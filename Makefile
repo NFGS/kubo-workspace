@@ -46,7 +46,10 @@ contracts: ## Valida las respuestas reales contra el contrato OpenAPI
 	node kubo-gateway/scripts/contracts.mjs
 
 e2e: ## E2E de la PWA con auditoria de accesibilidad (Playwright + axe)
-	cd kubo-web && npx playwright test
+	KUBO_AUTH_RATE_LIMIT_PER_MINUTE=1000000 $(COMPOSE) up -d kubo-gateway >/dev/null 2>&1
+	@sleep 5
+	@cd kubo-web && npx playwright test; \
+	 status=$$?; cd "$(CURDIR)" && $(COMPOSE) up -d kubo-gateway >/dev/null 2>&1; exit $$status
 
 observability: ## Levanta el stack de trazas (Tempo + Grafana) junto al sistema
 	docker compose -f kubo-infra/docker-compose.yml -f kubo-infra/docker-compose.observability.yml --profile observability up -d
