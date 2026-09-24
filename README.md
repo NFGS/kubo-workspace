@@ -9,11 +9,12 @@ y opera sin conexión a internet.
 
 | Campo | Valor |
 | --- | --- |
-| Versión | `0.1.0-mvp` |
-| Fecha | 2026-09-23 |
+| Versión | `0.2.0` (MVP + Fase 1 de confiabilidad) |
+| Fecha | 2026-09-24 |
 | Alcance | MVP demostrable (ver `kubo-docs/09-demo-guion.md`) |
-| Verificación | `make smoke` — 37 comprobaciones end-to-end en verde |
-| Auditoría | `kubo-docs/10-auditoria.md` — 10 hallazgos corregidos y plan de mejora |
+| Verificación | `make smoke` — 73 comprobaciones en verde · `make bus-drill` 4/4 · `make restore-drill` 14/14 |
+| Auditoría | `kubo-docs/10-auditoria.md` — 17 hallazgos corregidos y 31 pendientes priorizados |
+| Plan de cierre | `kubo-docs/11-plan-de-cierre.md` — fases 0 y 1 completadas |
 | Licencia | MIT |
 
 ## Repositorios
@@ -32,19 +33,21 @@ y opera sin conexión a internet.
 ## Arranque rápido
 
 ```bash
-make up      # construye y levanta los 8 contenedores
+make up      # construye y levanta los 11 contenedores
 make smoke   # prueba el flujo completo end-to-end
 make down    # detiene el sistema
 ```
 
 Luego abrir <http://localhost:3000> y entrar con `admin@kubo.local` / `Admin123!`.
+El acceso por HTTPS queda en <https://localhost:3443> (certificado interno de Caddy).
 
 ## Documentación
 
 - Arquitectura: [`kubo-docs/01-arquitectura.md`](./kubo-docs/01-arquitectura.md)
 - Seguridad: [`kubo-docs/04-seguridad.md`](./kubo-docs/04-seguridad.md)
 - Modelo de datos: [`kubo-docs/02-modelo-datos.md`](./kubo-docs/02-modelo-datos.md)
-- **Auditoría técnica y plan de mejora**: [`kubo-docs/10-auditoria.md`](./kubo-docs/10-auditoria.md)
+- **Auditoría técnica y catálogo de pendientes**: [`kubo-docs/10-auditoria.md`](./kubo-docs/10-auditoria.md)
+- **Plan de cierre**: [`kubo-docs/11-plan-de-cierre.md`](./kubo-docs/11-plan-de-cierre.md)
 - Guion de demostración: [`kubo-docs/09-demo-guion.md`](./kubo-docs/09-demo-guion.md)
 - Índice completo: [`kubo-docs/README.md`](./kubo-docs/README.md)
 - PDF consolidado: `Kubo-Documentacion.pdf` (generar con `make pdf`)

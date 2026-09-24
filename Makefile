@@ -3,7 +3,7 @@ COMPOSE := docker compose -f kubo-infra/docker-compose.yml
 
 .DEFAULT_GOAL := help
 
-.PHONY: help up down build ps logs seed smoke demo restart clean foreign-stop foreign-start pdf push reset-demo
+.PHONY: help up down build ps logs seed smoke demo restart clean foreign-stop foreign-start pdf push reset-demo backup restore-drill bus-drill
 
 help: ## Muestra esta ayuda
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2}'
@@ -32,6 +32,15 @@ reset-demo: ## Limpia los datos de prueba y recarga la semilla (borra datos)
 
 smoke: ## Prueba el flujo completo end-to-end
 	./kubo-infra/scripts/smoke.sh
+
+bus-drill: ## Simulacro: caida del bus sin perdida de eventos
+	./kubo-infra/scripts/bus-drill.sh
+
+backup: ## Respalda PostgreSQL, MongoDB y la configuracion
+	./kubo-infra/scripts/backup.sh
+
+restore-drill: ## Restaura un respaldo en bases de prueba y lo verifica
+	./kubo-infra/scripts/restore-drill.sh
 
 demo: up ## Levanta y abre el navegador
 	@sleep 2 && xdg-open http://localhost:3000 >/dev/null 2>&1 || true
