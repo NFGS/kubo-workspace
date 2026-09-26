@@ -3,13 +3,19 @@ COMPOSE := docker compose -f kubo-infra/docker-compose.yml
 
 .DEFAULT_GOAL := help
 
-.PHONY: help up down build ps logs seed smoke demo restart clean foreign-stop foreign-start pdf push reset-demo backup restore-drill bus-drill contracts ci load e2e observability certs
+.PHONY: help up down build ps logs seed smoke demo restart clean foreign-stop foreign-start pdf push reset-demo backup restore-drill bus-drill contracts ci load e2e observability certs rotate-ca
 
 help: ## Muestra esta ayuda
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2}'
 
 certs: ## Genera la CA interna y los certificados de la malla (P-28)
 	./kubo-infra/scripts/gen-internal-certs.sh
+
+rotate-ca: ## Regenera la CA y los certificados y recrea la malla (P-28)
+	rm -rf kubo-infra/certs
+	./kubo-infra/scripts/gen-internal-certs.sh
+	$(COMPOSE) up -d --force-recreate kubo-iam kubo-crm kubo-erp kubo-analytics kubo-gateway
+	@echo "Malla rotada: los servicios ya confian en la CA nueva"
 
 up: certs ## Construye y levanta todo el sistema (genera la malla si falta)
 	$(COMPOSE) up -d --build
