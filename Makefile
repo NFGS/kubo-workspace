@@ -3,7 +3,7 @@ COMPOSE := docker compose -f kubo-infra/docker-compose.yml
 
 .DEFAULT_GOAL := help
 
-.PHONY: help up down build ps logs seed smoke demo restart clean foreign-stop foreign-start pdf push reset-demo backup restore-drill bus-drill contracts ci load e2e observability certs rotate-ca
+.PHONY: help up down build ps logs seed smoke demo restart clean foreign-stop foreign-start pdf push reset-demo backup backup-operator backup-operator-loop restore-drill bus-drill contracts ci load e2e observability certs rotate-ca
 
 help: ## Muestra esta ayuda
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2}'
@@ -47,6 +47,13 @@ bus-drill: ## Simulacro: caida del bus sin perdida de eventos
 
 backup: ## Respalda PostgreSQL, MongoDB y la configuracion
 	./kubo-infra/scripts/backup.sh
+
+backup-operator: ## Un ciclo del operador de respaldos (con verificacion)
+	$(COMPOSE) --profile backup run --rm kubo-backup --once
+	@echo "Respaldos en kubo-infra/backups: revise el MANIFEST"
+
+backup-operator-loop: ## Deja el operador corriendo (ciclo diario, retencion y verificacion)
+	$(COMPOSE) --profile backup up -d kubo-backup
 
 restore-drill: ## Restaura un respaldo en bases de prueba y lo verifica
 	./kubo-infra/scripts/restore-drill.sh
