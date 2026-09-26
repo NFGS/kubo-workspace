@@ -3,12 +3,15 @@ COMPOSE := docker compose -f kubo-infra/docker-compose.yml
 
 .DEFAULT_GOAL := help
 
-.PHONY: help up down build ps logs seed smoke demo restart clean foreign-stop foreign-start pdf push reset-demo backup restore-drill bus-drill contracts ci load e2e observability
+.PHONY: help up down build ps logs seed smoke demo restart clean foreign-stop foreign-start pdf push reset-demo backup restore-drill bus-drill contracts ci load e2e observability certs
 
 help: ## Muestra esta ayuda
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2}'
 
-up: ## Construye y levanta todo el sistema
+certs: ## Genera la CA interna y los certificados de la malla (P-28)
+	./kubo-infra/scripts/gen-internal-certs.sh
+
+up: certs ## Construye y levanta todo el sistema (genera la malla si falta)
 	$(COMPOSE) up -d --build
 	@echo "Kubo disponible en http://localhost:3000"
 
