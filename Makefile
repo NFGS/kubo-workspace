@@ -74,11 +74,14 @@ observability: ## Levanta el stack de trazas (Tempo + Grafana) junto al sistema
 ci: ## Ejecuta las mismas verificaciones que el CI (lint, pruebas, contratos, secretos)
 	./kubo-infra/scripts/ci-local.sh
 
-load: ## Prueba de carga del POS con 50 cajas (k6); eleva el limite por usuario durante la prueba
+load: ## Prueba de carga del POS con 50 cajas (k6); corre en la red interna del compose
 	KUBO_USER_RATE_LIMIT_PER_MINUTE=1000000 $(COMPOSE) up -d kubo-gateway >/dev/null
-	@sleep 5
-	@docker run --rm -i -e KUBO_API=http://host.docker.internal:9080/api/v1 \
-	  --add-host=host.docker.internal:host-gateway \
+	@for i in $$(seq 1 30); do \
+	  [ "$$(docker inspect kubo-gateway --format '{{.State.Health.Status}}' 2>/dev/null)" = "healthy" ] && break; \
+	  sleep 2; \
+	done
+	@docker run --rm -i -e KUBO_API=http://kubo-gateway:8080/api/v1 \
+	  --network kubo_kubo-net \
 	  -v "$(PWD)/kubo-infra/load:/load" grafana/k6 run /load/pos.js; \
 	 status=$$?; $(COMPOSE) up -d kubo-gateway >/dev/null; exit $$status
 
