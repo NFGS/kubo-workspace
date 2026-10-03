@@ -3,7 +3,7 @@ COMPOSE := docker compose -f kubo-infra/docker-compose.yml
 
 .DEFAULT_GOAL := help
 
-.PHONY: help up down build ps logs seed smoke demo restart clean foreign-stop foreign-start pdf push reset-demo backup backup-operator backup-operator-loop restore-drill bus-drill contracts ci load e2e observability certs rotate-ca
+.PHONY: help up down build ps logs seed smoke demo restart clean foreign-stop foreign-start pdf push reset-demo backup backup-operator backup-operator-loop restore-drill bus-drill contracts pact ci load load-big load-big-clean e2e observability certs rotate-ca
 
 help: ## Muestra esta ayuda
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2}'
@@ -61,6 +61,10 @@ restore-drill: ## Restaura un respaldo en bases de prueba y lo verifica
 contracts: ## Valida las respuestas reales contra el contrato OpenAPI
 	node kubo-gateway/scripts/contracts.mjs
 
+pact: ## Contratos del consumidor (PWA) y su verificacion contra la API viva
+	cd kubo-web && npx vitest run --config vitest.pact.config.ts
+	node kubo-gateway/scripts/pact-verify.mjs
+
 e2e: ## E2E de la PWA con auditoria de accesibilidad (Playwright + axe)
 	KUBO_AUTH_RATE_LIMIT_PER_MINUTE=1000000 $(COMPOSE) up -d kubo-gateway >/dev/null 2>&1
 	@sleep 5
@@ -84,6 +88,21 @@ load: ## Prueba de carga del POS con 50 cajas (k6); corre en la red interna del 
 	  --network kubo_kubo-net \
 	  -v "$(PWD)/kubo-infra/load:/load" grafana/k6 run /load/pos.js; \
 	 status=$$?; $(COMPOSE) up -d kubo-gateway >/dev/null; exit $$status
+
+load-big: ## Carga con catalogo voluminoso: siembra 50.000 productos y mide la busqueda
+	./kubo-infra/load/seed-big-catalog.sh
+	KUBO_USER_RATE_LIMIT_PER_MINUTE=1000000 $(COMPOSE) up -d kubo-gateway >/dev/null
+	@for i in $$(seq 1 30); do \
+	  [ "$$(docker inspect kubo-gateway --format '{{.State.Health.Status}}' 2>/dev/null)" = "healthy" ] && break; \
+	  sleep 2; \
+	done
+	@docker run --rm -i -e KUBO_API=http://kubo-gateway:8080/api/v1 \
+	  --network kubo_kubo-net \
+	  -v "$(PWD)/kubo-infra/load:/load" grafana/k6 run /load/catalog.js; \
+	 status=$$?; $(COMPOSE) up -d kubo-gateway >/dev/null; exit $$status
+
+load-big-clean: ## Elimina el catalogo voluminoso de la demo
+	./kubo-infra/load/seed-big-catalog.sh --clean
 
 demo: up ## Levanta y abre el navegador
 	@sleep 2 && xdg-open http://localhost:3000 >/dev/null 2>&1 || true
