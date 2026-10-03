@@ -9,12 +9,12 @@ y opera sin conexión a internet.
 
 | Campo | Valor |
 | --- | --- |
-| Versión | `0.3.0` (MVP + fases 1–2: confiabilidad y calidad) |
-| Fecha | 2026-09-24 |
-| Alcance | MVP demostrable (ver `kubo-docs/09-demo-guion.md`) |
-| Verificación | `make smoke` 87/87 · `make ci` 9/9 · `make contracts` 10/10 · `make e2e` 4/4 · `make load` p95 149 ms · `make bus-drill` 4/4 · `make restore-drill` 14/14 |
-| Auditoría | `kubo-docs/10-auditoria.md` — 17 hallazgos corregidos y 31 pendientes priorizados |
-| Plan de cierre | `kubo-docs/11-plan-de-cierre.md` — fases 0–2 completadas; Fase 3 en curso |
+| Versión | `0.3.0` (MVP + fases 0–6: confiabilidad, calidad, núcleo comercial, diferenciadores y operación) |
+| Fecha | 2026-10-02 |
+| Alcance | Producto operable en un negocio (ver `kubo-docs/11-plan-de-cierre.md`) |
+| Verificación | `make smoke` 184/184 · `make ci` 10/10 · `make contracts` 23/23 · `make e2e` 5/5 · `make load` p95 149.76 ms · `make bus-drill` 4/4 · `make restore-drill` 14/14 |
+| Auditoría | `kubo-docs/10-auditoria.md` — 17 hallazgos corregidos; los 31 pendientes priorizados quedaron cerrados en las fases 1–6 (resta el backlog comercial y externo) |
+| Plan de cierre | `kubo-docs/11-plan-de-cierre.md` — fases 0–6 completadas; quedan las mejoras continuas |
 | Licencia | MIT |
 
 ## Repositorios
