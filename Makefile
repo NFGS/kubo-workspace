@@ -3,7 +3,7 @@ COMPOSE := docker compose -f kubo-infra/docker-compose.yml
 
 .DEFAULT_GOAL := help
 
-.PHONY: help up down build ps logs seed smoke demo restart clean foreign-stop foreign-start pdf push reset-demo backup backup-operator backup-operator-loop restore-drill bus-drill contracts pact ci load load-big load-big-clean e2e observability certs rotate-ca
+.PHONY: help up down build ps logs seed smoke demo restart clean foreign-stop foreign-start pdf push push-github reset-demo backup backup-operator backup-operator-loop restore-drill bus-drill contracts pact ci load load-big load-big-clean e2e observability certs rotate-ca
 
 help: ## Muestra esta ayuda
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2}'
@@ -124,3 +124,6 @@ pdf: ## Genera el PDF consolidado de documentacion
 
 push: ## Publica los 9 repositorios en GitLab (requiere GITLAB_TOKEN)
 	./kubo-infra/scripts/gitlab-push.sh
+
+push-github: ## Publica los 9 repositorios en GitHub (requiere gh autenticado)
+	./kubo-infra/scripts/github-push.sh
