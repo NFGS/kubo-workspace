@@ -3,7 +3,7 @@ COMPOSE := docker compose -f kubo-infra/docker-compose.yml
 
 .DEFAULT_GOAL := help
 
-.PHONY: help up down build ps logs seed smoke demo restart clean foreign-stop foreign-start pdf push-github reset-demo backup backup-operator backup-operator-loop restore-drill bus-drill contracts pact ci load load-big load-big-clean e2e observability certs rotate-ca
+.PHONY: help up down build ps logs seed smoke demo restart clean foreign-stop foreign-start pdf push-github reset-demo backup backup-operator backup-operator-loop restore-drill bus-drill contracts pact ci load load-big load-big-clean e2e observability certs rotate-ca obsidian
 
 help: ## Muestra esta ayuda
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2}'
@@ -121,6 +121,9 @@ foreign-start: ## Reactiva los contenedores ajenos
 
 pdf: ## Genera el PDF consolidado de documentacion
 	./kubo-docs/scripts/build-pdf.sh
+
+obsidian: ## Espeja la documentacion en el vault de Obsidian
+	./kubo-infra/scripts/obsidian-sync.sh
 
 push-github: ## Publica los 9 repositorios en GitHub (requiere gh autenticado)
 	./kubo-infra/scripts/github-push.sh
