@@ -17,3 +17,6 @@ erl_crash.dump
 # Artefactos de pruebas de Python en la raiz
 .pytest_cache/
 __pycache__/
+
+# Config local de opencode (MCP de Notion de Kubo; el token va en secrets.env)
+.opencode/
