@@ -12,7 +12,7 @@ y opera sin conexión a internet.
 | Versión | `0.3.0` (MVP + fases 0–6: confiabilidad, calidad, núcleo comercial, diferenciadores y operación) |
 | Fecha | 2026-10-04 |
 | Alcance | Producto operable en un negocio (ver `kubo-docs/11-plan-de-cierre.md`) |
-| Verificación | `make smoke` 192/192 · `make ci` 12/12 · `make contracts` 23/23 · `make e2e` 5/5 · `make load` 50 cajas 100 % de ventas (p95 107 ms con 10 cajas) · `make bus-drill` 4/4 · `make restore-drill` 14/14 |
+| Verificación | `make smoke` 192/192 · `make ci` 13/13 · `make contracts` 23/23 · `make e2e` 5/5 · `make load` 50 cajas 100 % de ventas (p95 107 ms con 10 cajas) · `make bus-drill` 4/4 · `make restore-drill` 14/14 |
 | Auditoría | `kubo-docs/10-auditoria.md` — 17 hallazgos corregidos; los 31 pendientes priorizados quedaron cerrados en las fases 1–6 (resta el backlog comercial y externo) |
 | Plan de cierre | `kubo-docs/11-plan-de-cierre.md` — fases 0–6 completadas; quedan las mejoras continuas |
 | Licencia | MIT |
