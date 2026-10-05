@@ -31,6 +31,19 @@ y opera sin conexión a internet.
 | [`kubo-infra`](./kubo-infra) | Compose, seed, smoke tests | Docker |
 | [`kubo-docs`](./kubo-docs) | Arquitectura, ADRs, manuales | Markdown + Mermaid |
 
+## Clonar el proyecto
+
+El código vive en **9 repositorios** (polyrepo deliberado, ADR-0002). El
+workspace es la puerta de entrada:
+
+```bash
+git clone https://github.com/NFGS/kubo-workspace.git
+cd kubo-workspace
+make clone                                   # clona los 8 repos hijos
+cp kubo-infra/.env.example kubo-infra/.env    # completar claves (ver abajo)
+make up                                      # construye y levanta el sistema
+```
+
 ## Arranque rápido
 
 ```bash
