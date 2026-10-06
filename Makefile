@@ -3,7 +3,7 @@ COMPOSE := docker compose -f kubo-infra/docker-compose.yml
 
 .DEFAULT_GOAL := help
 
-.PHONY: help clone up down build ps logs seed smoke demo restart clean foreign-stop foreign-start pdf push-github reset-demo backup backup-operator backup-operator-loop restore-drill bus-drill contracts pact ci load load-big load-big-clean e2e observability certs rotate-ca obsidian sync sync-status
+.PHONY: help clone up down build ps logs seed smoke demo restart clean foreign-stop foreign-start pdf push-github reset-demo backup backup-operator backup-operator-loop restore-drill bus-drill contracts pact ci load load-big load-big-clean e2e observability certs rotate-ca obsidian sync sync-status sync-check sync-pull sync-auto
 
 help: ## Muestra esta ayuda
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2}'
@@ -133,6 +133,15 @@ sync: ## Sincroniza los 4 entornos (local, GitHub, Notion, Obsidian)
 
 sync-status: ## Muestra el estado de sincronizacion de los 4 entornos
 	./kubo-infra/scripts/kubo-sync.sh status
+
+sync-check: ## Chequeo profundo de deriva (GitHub, Notion y Obsidian incluidos)
+	./kubo-infra/scripts/kubo-sync.sh check
+
+sync-pull: ## Importa a local los cambios hechos en GitHub, Notion u Obsidian
+	./kubo-infra/scripts/kubo-sync.sh pull
+
+sync-auto: ## Ciclo completo (check + pull + run) de los 4 entornos
+	./kubo-infra/scripts/kubo-sync.sh auto
 
 push-github: ## Publica los 9 repositorios en GitHub (requiere gh autenticado)
 	./kubo-infra/scripts/github-push.sh

@@ -20,3 +20,6 @@ __pycache__/
 
 # Config local de opencode (MCP de Notion de Kubo; el token va en secrets.env)
 .opencode/
+
+# Staging de conflictos de la sincronización de los 4 entornos (kubo-sync)
+.sync/
