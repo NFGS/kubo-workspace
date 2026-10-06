@@ -1,5 +1,7 @@
 # Kubo — ERP + CRM autoalojable para PYMES
 
+[![Licencia: MIT](https://img.shields.io/badge/licencia-MIT-green.svg)](LICENSE) [![Release](https://img.shields.io/github/v/release/NFGS/kubo-workspace?label=release)](https://github.com/NFGS/kubo-workspace/releases)
+
 Kubo es un sistema ERP/CRM pensado para negocios pequeños y medianos que necesitan
 digitalizar sus procesos sin pagar suscripciones SaaS. Se instala en el local del
 negocio (mini-PC o VPS económico) con un solo comando, funciona como PWA instalable
@@ -13,6 +15,7 @@ y opera sin conexión a internet.
 | Fecha | 2026-10-05 |
 | Alcance | Producto operable en un negocio (ver `kubo-docs/11-plan-de-cierre.md`) |
 | Demo pública | <https://kubo.shares.zrok.io> — túnel zrok (100 % OSS, ADR-0028); la ruta directa/VPS queda documentada en `kubo-docs/05-despliegue.md` §9 |
+| Repositorios | Públicos con licencia MIT y CI verde en GitHub Actions (ADR-0029) |
 | Verificación | `make smoke` 192/192 · `make ci` 13/13 · `make contracts` 23/23 · `make e2e` 5/5 · `make load` 50 cajas 100 % de ventas (p95 107 ms con 10 cajas) · `make bus-drill` 4/4 · `make restore-drill` 14/14 |
 | Auditoría | `kubo-docs/10-auditoria.md` — 17 hallazgos corregidos; los 31 pendientes priorizados quedaron cerrados en las fases 1–6 (resta el backlog comercial y externo) |
 | Plan de cierre | `kubo-docs/11-plan-de-cierre.md` — fases 0–6 completadas; quedan las mejoras continuas |
