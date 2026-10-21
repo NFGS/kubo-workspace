@@ -23,3 +23,8 @@ __pycache__/
 
 # Staging de conflictos de la sincronización de los 4 entornos (kubo-sync)
 .sync/
+
+# Carpeta de trabajo de archify (candidatos, HTML y recibos de verificación).
+# El candidato JSON que genera los diagramas sí se versiona en
+# kubo-docs/diagramas/archify/.
+.archify/
